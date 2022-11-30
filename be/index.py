@@ -13,6 +13,10 @@ def index():
 def category():
     return render_template('category.html')
 
+@app.route('/category/<id>', methods=['GET'])    
+def postListByCategoryId(id):
+    return render_template('postlist.html')
+
 @app.route('/post', methods=['GET'])    
 def postlist():
     return render_template('postlist.html')
@@ -28,6 +32,10 @@ def contact():
 @app.route('/sumitpost', methods=['GET'])    
 def submitpost():
     return render_template('submitpost.html')
+
+@app.route('/error', methods=['GET'])    
+def error():
+    return render_template('404.html')
 
 # post
 

@@ -1,31 +1,15 @@
-var btl_category = document.getElementById('btl_category')
-btl_category.innerHTML=`<li>
-<a href="#">Bữa sáng
-    <span>25</span>
-</a>
-</li>
-<li>
-<a href="#">Bữa trưa
-    <span>15</span>
-</a>
-</li>
-<li>
-<a href="#">Pasta
-    <span>22</span>
-</a>
-</li>
-<li>
-<a href="#">Bữa tối
-    <span>18</span>
-</a>
-</li>
-<li>
-<a href="#">Tráng miệng
-    <span>36</span>
-</a>
-</li>
-<li>
-<a href="#">Nước uống
-    <span>12</span>
-</a>
-</li>`
+$.ajax({
+    url: '/api/post/get-five-category-random',
+    type: 'GET',
+    success: function (data) {
+        const btl_category = document.getElementById('btl_category')
+        btl_category.innerHTML =''
+        for(i=0;i<5;i++){
+            btl_category.innerHTML+=`<li>
+                                        <a href="/category/${data[i].id[0]}">${data[i].name[0]}
+                                            <span></span>
+                                        </a>
+                                    </li>`
+        }
+    }
+})

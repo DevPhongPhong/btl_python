@@ -9,14 +9,10 @@ LogOut =() =>{
     alert('logout')
 }
 
-testCallAjax = ()=>{
-    $.ajax({
-        url:'http://127.0.0.1:5000/api/category/add',
-        type:'POST',
-        data:{"data1":"Hello"},
-        dataType: 'json',
-        success:function(res){
-            alert('success');
-        }
-    });
-}
+$.ajax({
+    url:'/api/post/get-five-post-highest-viewcount',
+    type:'GET',
+    success: function (res){
+        console.log(res)
+    }
+})

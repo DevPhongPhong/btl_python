@@ -9,11 +9,11 @@ def add_post(post):
         conn = sqlite3.connect("data/database.db")
         cur = conn.cursor()
         sql = """
-        INSERT INTO post(id,sub_content,full_content,main_image,image,author,
+        INSERT INTO post(id,title,sub_content,full_content,main_image,image,author,
         viewcount,created_time,category,tag,id_category)
         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
-        cur.execute(sql,post['id'],post['sub_content'],post['full_content'],post['main_image'],post['image'],post['author'],post['viewcount'],post['created_time'],post['category'],post['tag'],post['id_category'])
+        cur.execute(sql,post['id'],post['title'],post['sub_content'],post['full_content'],post['main_image'],post['image'],post['author'],post['viewcount'],post['created_time'],post['category'],post['tag'],post['id_category'])
         conn.commit()
         added_post = get_post_by_id(cur.lastrowid)
     except:
@@ -34,6 +34,7 @@ def get_post():
         for i in rows:
             post = {}
             post["id"] = i["id"],
+            post["title"] = i["title"]
             post["sub_content"] = i["sub_content"],
             post["full_content"] = i["full_content"],
             post["main_image"] = i["main_image"],
@@ -59,6 +60,7 @@ def get_post_by_id(id_post):
         cur.execute("SELECT * FROM post WHERE id = ?",(id_post,))
         row = cur.fetchone()
         post["id"] = row["id"],
+        post["title"] = row["title"]
         post["sub_content"] = row["sub_content"],
         post["full_content"] = row["full_content"],
         post["main_image"] = row["main_image"],
@@ -80,11 +82,11 @@ def update_post(post):
         conn = sqlite3.connect("data/database.db")
         cur = conn.cursor()
         sql = """
-        UPDATE post SET sub_content = ?, full_content = ?, main_image = ?,
+        UPDATE post SET title = ?, sub_content = ?, full_content = ?, main_image = ?,
         image = ?, author = ?, viewcount = ?, created_time = ?,
         category = ?, tag = ?, id_category = ? WHERE id = ?
         """
-        cur.execute(sql,post['sub_content'],post['full_content'],post['main_image'],post['image'],post['author'],post['viewcount'],post['created_time'],post['category'],post['tag'],post['id_category'],post['id'])
+        cur.execute(sql,post["title"],post['sub_content'],post['full_content'],post['main_image'],post['image'],post['author'],post['viewcount'],post['created_time'],post['category'],post['tag'],post['id_category'],post['id'])
         conn.commit()
         updated_post = get_post_by_id(post["id"])
     except:
@@ -207,11 +209,12 @@ def get_three_post_latest():
         conn = sqlite3.connect("data/database.db")
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        cur.execute("SELECT * FROM post ORDER BY created-time desc LIMIT 3")
+        cur.execute("SELECT * FROM post ORDER BY created_time desc LIMIT 3")
         rows = cur.fetchall()
         for i in rows:
             post = {}
             post["id"] = i["id"],
+            post["title"] = i["title"],
             post["sub_content"] = i["sub_content"],
             post["full_content"] = i["full_content"],
             post["main_image"] = i["main_image"],
@@ -239,6 +242,7 @@ def get_three_post_random():
         for i in rows:
             post = {}
             post["id"] = i["id"],
+            post["title"] = i["title"],
             post["sub_content"] = i["sub_content"],
             post["full_content"] = i["full_content"],
             post["main_image"] = i["main_image"],
@@ -261,11 +265,12 @@ def get_five_post_highest_viewcount():
         conn = sqlite3.connect("data/database.db")
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        cur.execute("SELECT * FROM post ORDER BY viewcount desc LIMIT 3")
+        cur.execute("SELECT * FROM post ORDER BY viewcount desc LIMIT 5")
         rows = cur.fetchall()
         for i in rows:
             post = {}
             post["id"] = i["id"],
+            post["title"] = i["title"],
             post["sub_content"] = i["sub_content"],
             post["full_content"] = i["full_content"],
             post["main_image"] = i["main_image"],
