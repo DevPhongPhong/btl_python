@@ -59,16 +59,31 @@ def api_get_post(id_post):
 
 @app.route('/api/post/add',  methods = ['POST'])
 def api_add_post():
-    post = request.json()
-    return jsonify(utils.add_post(post))
+    if 'username' in session:
+        post = request.json
+        return jsonify(utils.add_post(post))
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
 @app.route('/api/post/update',  methods = ['PUT'])
 def api_update_post():
-    post = request.json()
-    return jsonify(utils.update_post(post))
+    if 'username' in session:
+        post = request.json
+        return jsonify(utils.update_post(post))
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
 
 @app.route('/api/post/delete/<id>',  methods = ['DELETE'])
 def api_delete_post(id_post):
-    return jsonify(utils.delete_post(id_post))
+    if 'username' in session:
+        return jsonify(utils.delete_post(id_post))
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
 
 # category
 
@@ -82,16 +97,31 @@ def api_get_category(id_category):
 
 @app.route('/api/category/add',  methods = ['POST'])
 def api_add_category():
-    category = request.json()
-    return jsonify(utils.add_category(category))
+    if 'username' in session:
+        category = request.json
+        return jsonify(utils.add_category(category))
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
 @app.route('/api/category/update',  methods = ['PUT'])
 def api_update_category():
-    category = request.json()
-    return jsonify(utils.update_category(category))
+    if 'username' in session:
+        category = request.json
+        return jsonify(utils.update_category(category))
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
 
 @app.route('/api/category/delete/<int:id_category>',  methods = ['DELETE'])
 def api_delete_category(id_category):
-    return jsonify(utils.delete_category(id_category))
+    if 'username' in session:
+        return jsonify(utils.delete_category(id_category))
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
 
 # Some functions
 
