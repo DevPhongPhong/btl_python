@@ -24,7 +24,7 @@
     <!-- Flaticon CSS -->
     <link rel="stylesheet" href="/static/fonts/flaticon.css">
     <!-- Custom Css -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
     <!-- Modernizr Js -->
     <script src="/static/js/modernizr-3.6.0.min.js"></script>
     <!-- Jquery Js -->
@@ -43,11 +43,12 @@
             </div>
         </div>
         <div class="inline-box mb-5 mt-4">
-            <button class="btn-fill" type="button" value="Login">Đăng nhập</button>
+            <button class="btn-fill" type="button" value="Login" onclick="login(username,password)">Đăng nhập</button>
         </div>
-        <script>
-            username = document.getElementById('username').innerHTML;
-            password = document.getElementById('password').innerHTML;
+        <script type="text/javascript">
+            function login(usernameE,passwordE){
+            username = usernameE.value;
+            password = passwordE.value;
             form = {'username':username,"password":password}
 
             $.ajax({
@@ -57,9 +58,13 @@
                 contentType:'application/json',
                 type:'POST',
                 success:()=>{
-                    alert('success')
+                    window.location.href='/admin/home'
+                },
+                error:()=>{
+                    alert('Đăng nhập không thành công')
                 }
             })
+        }
         </script>
     </form>
      

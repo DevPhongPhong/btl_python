@@ -43,8 +43,8 @@ def adminlogin():
     return render_template('adminlogin.html')
 
 @app.route('/admin/home', methods=['GET'])    
-def adminhome():
-    return render_template('adminhome.html')
+def adminindex():
+    return render_template('adminindex.html')
 
 # post
 
@@ -115,10 +115,9 @@ def api_get_list_post_same_category(id_category):
     return jsonify(utils.get_list_post_same_category(id_category))
 
 #login
-@app.route('/api/check')
+
+@app.route('/api/logged')
 def home():
-    passhash = generate_password_hash('admin')
-    print(passhash)
     if 'username' in session:
         username = session['username']
         return jsonify({'message' : 'You are already logged in', 'username' : username})
@@ -126,44 +125,47 @@ def home():
         resp = jsonify({'message' : 'Unauthorized'})
         resp.status_code = 401
         return resp
-  
-@app.route('/api/login', methods=['POST'])
+
+@app.route('/api/login',methods = ["POST"])
 def login():
+    print('11111111111111111111111111111')
+    data = request.json
+    username = data['username']
+    password = data['password']
     conn = sqlite3.connect("data/database.db")
-    _json = request.json()
-    _username = _json['username']
-    _password = _json['password']
-    print(_password)
-    # validate the received values
-    if _username and _password:
-        #check user exists          
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-          
-        sql = "SELECT * FROM useraccount WHERE username=%s"
-          
-        cursor.execute(sql, (username,))
-        row = cursor.fetchone()
-        username = row['username']
-        password = row['password']
-        if row:
-            if check_password_hash(password, _password):
-                session['username'] = username
-                cursor.close()
-                return jsonify({'message' : 'You are logged in successfully'})
-            else:
-                resp = jsonify({'message' : 'Bad Request - invalid password'})
-                resp.status_code = 400
-                return resp
+    cur = conn.cursor()
+    sql = """
+    SELECT 
+    username, password
+    FROM user
+    WHERE username = ? and password = ?
+    """
+    cur.execute(sql,(username,password))
+    row = cur.fetchone()
+    if row is None :
+        return jsonify({'message': 'Bad Request - invalid password'})
     else:
-        resp = jsonify({'message' : 'Bad Request - invalid credendtials'})
-        resp.status_code = 400
-        return resp
-          
+        return jsonify({'message': 'You are logged in successfully'})
+
 @app.route('/api/logout',methods=["GET"])
 def logout():
     if 'username' in session:
         session.pop('username', None)
     return jsonify({'message' : 'You successfully logged out'})
+    
+
+# test
+@app.route('/api/test',methods=['GET'])
+def testget():
+    return "hello"
+
+@app.route('/api/test/<id>',methods=['GET'])
+def testgetid(id):
+    return id
+ 
+@app.route('/api/test',methods=['POST'])
+def testpost():
+    return request.json   
 
 if __name__ == "__main__":
     app.run(debug=True)
