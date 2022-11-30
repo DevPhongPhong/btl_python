@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import utils,sqlite3,psycopg2,psycopg2.extras
 
 app = Flask(__name__)
+app.secret_key = 'any random string'
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/', methods=['GET'])
@@ -145,6 +146,7 @@ def login():
     if row is None :
         return jsonify({'message': 'Bad Request - invalid password'})
     else:
+        session['username'] = username
         return jsonify({'message': 'You are logged in successfully'})
 
 @app.route('/api/logout',methods=["GET"])
