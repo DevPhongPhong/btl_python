@@ -306,6 +306,39 @@ def get_five_category_random():
     
     return categories
 
+def get_list_post_same_category(id_category):
+    posts = []
+    try:
+        conn = sqlite3.connect("data/database.db")
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        sql = """
+        SELECT p.id,p.title,p.sub_content,p.full_content,p.main_image,p.image,p.author,p.viewcount,p.created_time, p.category,p.tag,p.id_category
+        FROM post p INNER JOIN category c
+        ON p.id_category = c.id and c.id = ?
+        """
+        cur.execute(sql,(id_category,))
+        rows = cur.fetchall()
+        for i in rows:
+            post = {}
+            post["id"] = i["id"],
+            post["title"] = i["title"]
+            post["sub_content"] = i["sub_content"],
+            post["full_content"] = i["full_content"],
+            post["main_image"] = i["main_image"],
+            post["image"] = i["image"],
+            post["author"] = i["author"],
+            post["viewcount"] = i["viewcount"],
+            post["created_time"] = i["created_time"],
+            post["category"] = i["category"],
+            post["tag"] = i["tag"],
+            post["id_category"] = i["id_category"]
+            posts.append(post)
+    except:
+        posts = []
+    
+    return posts
+
 # login
 
 

@@ -1,0 +1,79 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+
+   
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Ranna | 404 Error</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+    <!-- Normalize Css -->
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <!-- Main Css -->
+    <link rel="stylesheet" href="/static/css/main.css">
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="/static/fonts/flaticon.css">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Modernizr Js -->
+    <script src="/static/js/modernizr-3.6.0.min.js"></script>
+    <!-- Jquery Js -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+
+    <form class="login-form" method ="post">
+        <input class="main-input-box" type="text"  placeholder="Tên tài khoản" id="username"/>
+        <input class="main-input-box" type="password"  placeholder="Mật khẩu"id="password"/>
+        <div class="inline-box mb-5 mt-4">
+            <div class="checkbox checkbox-primary">
+                <input id="modal-checkbox" type="checkbox">
+                <label for="modal-checkbox">Nhớ tài khoản</label>
+            </div>
+        </div>
+        <div class="inline-box mb-5 mt-4">
+            <button class="btn-fill" type="button" value="Login">Đăng nhập</button>
+        </div>
+        <script>
+            username = document.getElementById('username').innerHTML;
+            password = document.getElementById('password').innerHTML;
+            form = {'username':username,"password":password}
+
+            $.ajax({
+                url:'/api/login',
+                data: JSON.stringify(form),
+                dataType:'json',
+                contentType:'application/json',
+                type:'POST',
+                success:()=>{
+                    alert('success')
+                }
+            })
+        </script>
+    </form>
+     
+
+    
+    <!-- Bootstrap Js -->
+    <script src="/static/js/popper.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- Plugins Js -->
+    <script src="/static/js/plugins.js"></script>
+    <!-- Smoothscroll Js -->
+    <script src="/static/js/smoothscroll.min.js"></script>
+    <!-- Custom Js -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
