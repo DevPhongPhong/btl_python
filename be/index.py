@@ -47,16 +47,16 @@ def submitcategory():
        return redirect(url_for('adminlogin'))
     
 
-@app.route('/admin/changecategory', methods=['GET'])    
-def changecategory():
+@app.route('/admin/changecategory/<id>', methods=['GET'])    
+def changecategory(id):
     if 'username' in session:
         return render_template('changecategory.html')
     else:
         return redirect(url_for('adminlogin'))
    
 
-@app.route('/admin/changepost', methods=['GET'])    
-def changepost():
+@app.route('/admin/changepost/<id>', methods=['GET'])    
+def changepost(id):
     if 'username' in session:
         return render_template('changepost.html')
     else:
@@ -69,7 +69,10 @@ def error():
 
 @app.route('/admin/login', methods=['GET'])    
 def adminlogin():
-    return render_template('adminlogin.html')
+    if 'username' not in session:
+        return render_template('adminlogin.html')
+    else:
+        return redirect(url_for('adminindex'))
 
 @app.route('/admin/home', methods=['GET'])    
 def adminindex():

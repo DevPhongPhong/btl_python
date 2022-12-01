@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="/static/style.css">
     <!-- Modernizr Js -->
     <script src="/static/js/modernizr-3.6.0.min.js"></script>
+    <!-- Jquery Js -->
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
@@ -108,7 +110,7 @@
     <div class="container">
         <h1>Category</h1>
         <div>
-            <table id="btl_category_body"class="table">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">id</th>
@@ -117,58 +119,34 @@
                         <th scope="col">thao tác</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Centro comercial Moctezuma</td>
-                        <td>Francisco Chang</td>
-                        <td>Mexico</td>
-                        <td>
-                            <button>Xóa</button>
-                            <button>sửa</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Centro comercial Moctezuma</td>
-                        <td>Francisco Chang</td>
-                        <td>Mexico</td>
-                        <td>
-                            <button>Xóa</button>
-                            <button>sửa</button>
-                        </td>
-                    </tr>
+                <tbody id="btl_catebody">
+                    
                 </tbody>
             </table>
         </div>
         <hr/>
         <h1>Post</h1>
         <div>
-            <table id="btl_post_body">
-                <tr>
-                    <th>id</th>
-                    <th>title</th>
-                    <th>sub_content</th>
-                    <th>full_content</th>
-                    <th>main_image</th>
-                    <th>author</th>
-                    <th>viewcount</th>
-                    <th>created_time</th>
-                    <th>category</th>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
-                </tr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">title</th>
+                        <th scope="col">sub_content</th>
+                        <th scope="col">viewcount</th>
+                        <th scope="col">created_time</th>
+                        <th scope="col">category</th>
+                        <th scope="col">thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="btl_postbody">
+                    
+                </tbody>
             </table>
         </div>
     </div>
-    <!-- Jquery Js -->
-    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/setAdminIndex.js"></script>
+    
     <!-- Bootstrap Js -->
     <script src="/static/js/popper.min.js"></script>
     <!-- Bootstrap Js -->
