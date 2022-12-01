@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Ranna | Submit Recipes</title>
+    <title>FoodBlog | ADMIN-TẠO DANH MỤC</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
@@ -151,8 +151,7 @@
                             
                             <div class="form-group">
                                 <label>Image</label>
-                                <input id="btl_mainImage" accept="image/*" type="file"ge/*" type="file" placeholder="Recipe Name" class="form-control" name="name"
-                                    data-error="Thêm ảnh" required>
+                                <input id="btl_mainImage" accept="image/*" type="file" placeholder="Recipe Name" class="form-control" name="name" data-error="Thêm ảnh" required>
                                 <img id="btl_mainImage_img"src=""/>
                                 <div class="help-block with-errors"></div>
                                 <script>
@@ -247,7 +246,8 @@
                 contentType:'application/json',
                 type:'POST',
                 success:(res)=>{
-                    console.log(res)
+                    alert("Đã thêm!")
+                    window.location.href='/admin/home'
                 }
             })
         }
