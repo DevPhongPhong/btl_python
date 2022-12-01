@@ -36,8 +36,86 @@
 </head>
 
 <body>
-    <div id="preloader"></div>
-      
+    
+    <header class="header-one">
+        <div id="header-main-menu" class="header-main-menu header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-3 col-sm-4 col-4 possition-static">
+                        <div class="site-logo-mobile">
+                            <a href="/" class="sticky-logo-light"><img src="/static/img/Food-com-logo.png"
+                                    style="max-height: 40px;" alt="Site Logo"></a>
+                            <a href="/" class="sticky-logo-dark"><img src="/static/img/Food-com-logo.png"
+                                    style="max-height: 40px;" alt="Site Logo"></a>
+                        </div>
+                        <nav class="site-nav">
+                            <ul id="site-menu" class="site-menu">
+                                <li><button onclick="logout()">Đăng xuất</button>
+                                </li>
+                                <li>
+                                    <a href="/admin/home">Home</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/submitpost">Đăng bài</a>
+                                </li>
+                                <li><a href="/admin/submitcategory">Tạo danh mục</a>
+
+                                </li>
+                            </ul>
+                        </nav>
+                        <script>
+                            logout=()=>{
+                                $.ajax({
+                                    url:'/api/logout',
+                                    success:()=>{
+                                        localStorage.clear()
+                                        window.location.href='/admin/login'
+                                    }
+                                })
+                            }
+                            post=()=>{
+                                window.location.href='/admin/submitpost'
+                            }
+                            category=()=>{
+                                window.location.href='/admin/submitcategory'
+                            }
+                        </script>
+                    </div>
+                    <div class="col-lg-4 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
+                        <div class="nav-action-elements-layout1">
+                            <ul>
+                                <li id="btl_loginShow">
+                                   
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mob-menu-open toggle-menu">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom d-none d-lg-block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="nav-action-elements-layout2">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="site-logo-desktop">
+                            <a href="/" class="main-logo"><img src="/static/img/Food-com-logo.png" alt="Site Logo"
+                                    style="max-height: 60px;"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>  
     <a href="#wrapper" data-type="section-switch" class="scrollup">
         <i class="fas fa-angle-double-up"></i>
     </a>
@@ -51,7 +129,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="breadcrumbs-area">
-                            <h1>Tạo Category</h1>
+                            <h1>Sửa Category</h1>
                         </div>
                     </div>
                 </div>
@@ -73,7 +151,7 @@
                             
                             <div class="form-group">
                                 <label>Image</label>
-                                <input id="btl_mainImage" type="file" placeholder="Recipe Name" class="form-control" name="name"
+                                <input id="btl_mainImage" accept="image/*" type="file" placeholder="Recipe Name" class="form-control" name="name"
                                     data-error="Thêm ảnh" required>
                                 <img id="btl_mainImage_img"src=""/>
                                 <div class="help-block with-errors"></div>
@@ -90,7 +168,7 @@
                                     })
                                 </script>
                             </div>
-                            <button type="button" class="btn-submit" onclick="postpost()">SUBMIT RECIPE</button>
+                            <button type="button" class="btn-submit" onclick="postpost()">ĐĂNG</button>
                         </form>
                     </div>
 
@@ -157,19 +235,31 @@
     <!-- Custom Js -->
     <script src="/static/js/main.js"></script>
     <script>
+        id=parseInt(location.pathname.substring(22,location.pathname.length))
+
+        $.ajax({
+            url:`/api/post/${id}`,
+            success: (res)=>{
+                document.getElementById('btl_title').value = res.title;
+                document.getElementById('btl_mainImage_img').src = res.main_image[0] ;
+            }
+        })
+
+
         postpost=()=>{
             form = {
                 name: document.getElementById('btl_title').value,
                 main_image: document.getElementById('btl_mainImage_img').src,
             };
             $.ajax({
-                url:'/api/category/add',
+                url:`/api/category/update/${id}`,
                 data:JSON.stringify(form),
                 dataType:'json',
                 contentType:'application/json',
-                type:'POST',
+                type:'PUT',
                 success:(res)=>{
-                    console.log(res)
+                    alert("Đã sửa!")
+                    window.location.href='/admin/home'
                 }
             })
         }

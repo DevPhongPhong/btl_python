@@ -30,7 +30,7 @@ $.ajax({
             btl_catebody.innerHTML+=`<tr>
                                         <td>${res[i].id[0]}</td>
                                         <td>${res[i].name[0]}</td>
-                                        <td>${res[i].main_image[0]}</td>
+                                        <td><img src="${res[i].main_image[0]}" style="max-height:100px"/></td>
                                         <td>
                                             <button onclick="deleteCate(${res[i].id[0]})">Xóa</button>
                                             <a href="/admin/changecategory/${res[i].id[0]}">Sửa</button>

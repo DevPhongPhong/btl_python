@@ -1,8 +1,9 @@
 import sqlite3
 import datetime as dt
 import os
+from flask import request
 # post
- 
+
 def add_post(post):
     added_post = {}
     try:
@@ -20,9 +21,9 @@ def add_post(post):
         conn().rollback()
     finally:
         conn.close()
- 
+    
     return added_post
- 
+
 def get_post():
     posts = []
     try:
@@ -48,9 +49,9 @@ def get_post():
             posts.append(post)
     except:
         posts = []
- 
+    
     return posts
- 
+
 def get_post_by_id(id_post):
     post = {}
     try:
@@ -73,10 +74,10 @@ def get_post_by_id(id_post):
         post["id_category"] = row["id_category"]
     except:
         post = {}
- 
+    
     return post
- 
-def update_post(post):
+
+def update_post(id_post, data):
     updated_post = {}
     try:
         conn = sqlite3.connect("data/database.db")
@@ -86,17 +87,18 @@ def update_post(post):
         image = ?, author = ?, viewcount = ?, created_time = ?,
         category = ?, tag = ?, id_category = ? WHERE id = ?
         """
-        cur.execute(sql,(post["title"],post['sub_content'],post['full_content'],post['main_image'],post['image'],post['author'],post['viewcount'],post['created_time'],post['category'],post['tag'],post['id_category'],post['id'],))
+        
+        cur.execute(sql,(data["title"],data['sub_content'],data['full_content'],data['main_image'],data['image'],data['author'],data['viewcount'],data['created_time'],data['category'],data['tag'],data['id_category'],id_post,))
         conn.commit()
-        updated_post = get_post_by_id(post["id"])
+        updated_post = get_post_by_id(id_post)
     except:
         conn.rollback()
         updated_post = {}
     finally:
         conn.close()
- 
+        
     return updated_post
- 
+
 def delete_post(id_post):
     try:
         conn = sqlite3.connect("data/database.db")
@@ -111,28 +113,28 @@ def delete_post(id_post):
         conn.rollback()
     finally:
         conn.close()
- 
+
 # category
- 
+
 def add_category(category):
     added_category = {}
     try:
         conn = sqlite3.connect("data/database.db")
         cur = conn.cursor()
         sql = """
-        INSERT INTO category(id,name,main_image)
-        VALUES(?, ?, ?)
+        INSERT INTO category(name,main_image)
+        VALUES(?, ?)
         """
-        cur.execute(sql,(category["id"],category["name"],category["main_image"],))
+        cur.execute(sql,(category["name"],category["main_image"],))
         conn.commit()
         added_category = get_category_by_id(cur.lastrowid)
     except:
         conn().rollback()
     finally:
         conn.close()
- 
+    
     return added_category
- 
+
 def get_category():
     categories = []
     try:
@@ -149,9 +151,9 @@ def get_category():
             categories.append(category)
     except:
         categories = []
- 
+    
     return categories
- 
+
 def get_category_by_id(id_category):
     category = {}
     try:
@@ -165,10 +167,10 @@ def get_category_by_id(id_category):
         category["main_image"] = row["main_image"],
     except:
         category = {}
- 
+    
     return category
- 
-def update_category(category):
+
+def update_category(id_category, data):
     updated_category = {}
     try:
         conn = sqlite3.connect("data/database.db")
@@ -177,17 +179,20 @@ def update_category(category):
         UPDATE category SET name = ?, main_image = ?
         WHERE id = ?
         """
-        cur.execute(sql,(category["name"],category["main_image"],category["id"],))
+        name = data["name"]
+        main_image = data["main_image"]
+        
+        cur.execute(sql,(name,main_image,id_category))
         conn.commit()
-        updated_category = get_category_by_id(category["id"])
+        updated_category = get_category_by_id(id)
     except:
         conn.rollback()
         updated_category = {}
     finally:
         conn.close()
- 
+        
     return updated_category
- 
+
 def delete_category(id_category):
     try:
         conn = sqlite3.connect("data/database.db")
@@ -202,9 +207,9 @@ def delete_category(id_category):
         conn.rollback()
     finally:
         conn.close()
- 
+
 # Some functions
- 
+
 def get_three_post_latest():
     posts = []
     try:
@@ -230,9 +235,9 @@ def get_three_post_latest():
             posts.append(post)
     except:
         posts = []
- 
+    
     return posts
- 
+
 def get_three_post_random():
     posts = []
     try:
@@ -258,9 +263,9 @@ def get_three_post_random():
             posts.append(post)
     except:
         posts = []
- 
+    
     return posts
- 
+
 def get_five_post_highest_viewcount():
     posts = []
     try:
@@ -286,9 +291,9 @@ def get_five_post_highest_viewcount():
             posts.append(post)
     except:
         posts = []
- 
+    
     return posts
- 
+
 def get_five_category_random():
     categories = []
     try:
@@ -305,9 +310,9 @@ def get_five_category_random():
             categories.append(category)
     except:
         categories = []
- 
+    
     return categories
- 
+
 def get_list_post_same_category(id_category):
     posts = []
     try:
@@ -338,12 +343,11 @@ def get_list_post_same_category(id_category):
             posts.append(post)
     except:
         posts = []
- 
+    
     return posts
- 
+
 # login
- 
- 
+
+
 if __name__ == "__main__":
     pass
- 
