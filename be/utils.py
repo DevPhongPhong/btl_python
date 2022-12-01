@@ -60,6 +60,9 @@ def get_post_by_id(id_post):
         cur = conn.cursor()
         cur.execute("SELECT * FROM post WHERE id = ?",(id_post,))
         row = cur.fetchone()
+        temp = int(row["viewcount"])
+        temp += 1
+        temp = str(temp)
         post["id"] = row["id"],
         post["title"] = row["title"]
         post["sub_content"] = row["sub_content"],
@@ -67,16 +70,17 @@ def get_post_by_id(id_post):
         post["main_image"] = row["main_image"],
         post["image"] = row["image"],
         post["author"] = row["author"],
-        post["viewcount"] = row["viewcount"],
+        post["viewcount"] = temp,
         post["created_time"] = row["created_time"],
         post["category"] = row["category"],
         post["tag"] = row["tag"],
         post["id_category"] = row["id_category"]
+        cur.execute("UPDATE post SET viewcount = ? WHERE id = ?",(temp,id_post,))
+        conn.commit()
     except:
         post = {}
-    
+ 
     return post
-
 def update_post(id_post, data):
     updated_post = {}
     try:
