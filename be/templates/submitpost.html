@@ -66,19 +66,19 @@
                         <form class="submit-recipe-form">
                             <div class="form-group">
                                 <label>Title</label>
-                                <input id="btl_title"type="text" placeholder="Recipe Name" class="form-control" name="name"
+                                <input id="btl_title"type="text" placeholder="Title" class="form-control" name="name"
                                     data-error="Thêm Title" required>
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="form-group">
-                                <label>Sub Title</label>
-                                <input id="btl_sub_title"type="text" placeholder="Recipe Name" class="form-control" name="name"
-                                    data-error="Thêm sub title" required>
+                                <label>Sub Content</label>
+                                <input id="btl_sub_content"type="text" placeholder="Sub Content" class="form-control" name="name"
+                                    data-error="Thêm sub content" required>
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="form-group">
                                 <label>Main Image</label>
-                                <input id="btl_mainImage" type="file" placeholder="Recipe Name" class="form-control" name="name"
+                                <input id="btl_mainImage" type="file" placeholder="Main Image" class="form-control" name="name"
                                     data-error="Thêm ảnh" required>
                                 <img id="btl_mainImage_img"src=""/>
                                 <div class="help-block with-errors"></div>
@@ -120,7 +120,7 @@
                                 <div class="summernote"></div>
                             </div>
 
-                            <button type="button" class="btn-submit" onclick="postpost()">SUBMIT RECIPE</button>
+                            <button type="button" class="btn-submit" onclick="postpost()">Đăng bài</button>
                         </form>
                     </div>
 
@@ -188,13 +188,26 @@
     <script src="/static/js/main.js"></script>
     <script>
         postpost=()=>{
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today = yyyy + '-' + mm + '-' + dd;
+
             form = {
+                
                 title: document.getElementById('btl_title').value,
-                sub_title: document.getElementById('btl_sub_title').value,
-                main_image_name: document.getElementById('btl_mainImage').value,
+                sub_content: document.getElementById('btl_sub_content').value,
+                full_content: document.getElementsByClassName('note-editable')[0].innerHTML,
                 main_image: document.getElementById('btl_mainImage_img').src,
-                category: document.getElementById('btl_select_cate').value,
-                full_content: document.getElementsByClassName('note-editable')[0].innerHTML
+                image: document.getElementById('btl_mainImage').value,
+                author: localStorage['username'],
+                viewcount: 0,
+                created_time: today,
+                category: document.getElementById('btl_select_cate').options[document.getElementById('btl_select_cate').selectedIndex].text,  
+                tag:'tag',
+                id_category: parseInt(document.getElementById('btl_select_cate').value)
             };
             $.ajax({
                 url:'/api/post/add',

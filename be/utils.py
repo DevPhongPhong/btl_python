@@ -2,27 +2,27 @@ import sqlite3
 import datetime as dt
 import os
 # post
-
+ 
 def add_post(post):
     added_post = {}
     try:
         conn = sqlite3.connect("data/database.db")
         cur = conn.cursor()
         sql = """
-        INSERT INTO post(id,title,sub_content,full_content,main_image,image,author,
+        INSERT INTO post(title,sub_content,full_content,main_image,image,author,
         viewcount,created_time,category,tag,id_category)
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
-        cur.execute(sql,post['id'],post['title'],post['sub_content'],post['full_content'],post['main_image'],post['image'],post['author'],post['viewcount'],post['created_time'],post['category'],post['tag'],post['id_category'])
+        cur.execute(sql,(post['title'],post['sub_content'],post['full_content'],post['main_image'],post['image'],post['author'],post['viewcount'],post['created_time'],post['category'],post['tag'],post['id_category'],))
         conn.commit()
         added_post = get_post_by_id(cur.lastrowid)
     except:
         conn().rollback()
     finally:
         conn.close()
-    
+ 
     return added_post
-
+ 
 def get_post():
     posts = []
     try:
@@ -48,9 +48,9 @@ def get_post():
             posts.append(post)
     except:
         posts = []
-    
+ 
     return posts
-
+ 
 def get_post_by_id(id_post):
     post = {}
     try:
@@ -73,9 +73,9 @@ def get_post_by_id(id_post):
         post["id_category"] = row["id_category"]
     except:
         post = {}
-    
+ 
     return post
-
+ 
 def update_post(post):
     updated_post = {}
     try:
@@ -86,7 +86,7 @@ def update_post(post):
         image = ?, author = ?, viewcount = ?, created_time = ?,
         category = ?, tag = ?, id_category = ? WHERE id = ?
         """
-        cur.execute(sql,post["title"],post['sub_content'],post['full_content'],post['main_image'],post['image'],post['author'],post['viewcount'],post['created_time'],post['category'],post['tag'],post['id_category'],post['id'])
+        cur.execute(sql,(post["title"],post['sub_content'],post['full_content'],post['main_image'],post['image'],post['author'],post['viewcount'],post['created_time'],post['category'],post['tag'],post['id_category'],post['id'],))
         conn.commit()
         updated_post = get_post_by_id(post["id"])
     except:
@@ -94,25 +94,26 @@ def update_post(post):
         updated_post = {}
     finally:
         conn.close()
-        
+ 
     return updated_post
-
+ 
 def delete_post(id_post):
     try:
         conn = sqlite3.connect("data/database.db")
+        cur = conn.cursor()
         sql = """
         DELETE from post
         WHERE id = ?
         """
-        conn.execute(sql,id_post,)
+        cur.execute(sql,(id_post,))
         conn.commit()
     except:
         conn.rollback()
     finally:
         conn.close()
-
+ 
 # category
-
+ 
 def add_category(category):
     added_category = {}
     try:
@@ -122,16 +123,16 @@ def add_category(category):
         INSERT INTO category(id,name,main_image)
         VALUES(?, ?, ?)
         """
-        cur.execute(sql,category["id"],category["name"],category["main_image"])
+        cur.execute(sql,(category["id"],category["name"],category["main_image"],))
         conn.commit()
         added_category = get_category_by_id(cur.lastrowid)
     except:
         conn().rollback()
     finally:
         conn.close()
-    
+ 
     return added_category
-
+ 
 def get_category():
     categories = []
     try:
@@ -148,9 +149,9 @@ def get_category():
             categories.append(category)
     except:
         categories = []
-    
+ 
     return categories
-
+ 
 def get_category_by_id(id_category):
     category = {}
     try:
@@ -164,9 +165,9 @@ def get_category_by_id(id_category):
         category["main_image"] = row["main_image"],
     except:
         category = {}
-    
+ 
     return category
-
+ 
 def update_category(category):
     updated_category = {}
     try:
@@ -176,7 +177,7 @@ def update_category(category):
         UPDATE category SET name = ?, main_image = ?
         WHERE id = ?
         """
-        cur.execute(sql,category["name"],category["main_image"],category["id"])
+        cur.execute(sql,(category["name"],category["main_image"],category["id"],))
         conn.commit()
         updated_category = get_category_by_id(category["id"])
     except:
@@ -184,25 +185,26 @@ def update_category(category):
         updated_category = {}
     finally:
         conn.close()
-        
+ 
     return updated_category
-
+ 
 def delete_category(id_category):
     try:
         conn = sqlite3.connect("data/database.db")
+        cur = conn.cursor()
         sql = """
         DELETE from category
         WHERE id = ?
         """
-        conn.execute(sql,id_category,)
+        cur.execute(sql,(id_category,))
         conn.commit()
     except:
         conn.rollback()
     finally:
         conn.close()
-
+ 
 # Some functions
-
+ 
 def get_three_post_latest():
     posts = []
     try:
@@ -228,9 +230,9 @@ def get_three_post_latest():
             posts.append(post)
     except:
         posts = []
-    
+ 
     return posts
-
+ 
 def get_three_post_random():
     posts = []
     try:
@@ -256,9 +258,9 @@ def get_three_post_random():
             posts.append(post)
     except:
         posts = []
-    
+ 
     return posts
-
+ 
 def get_five_post_highest_viewcount():
     posts = []
     try:
@@ -284,9 +286,9 @@ def get_five_post_highest_viewcount():
             posts.append(post)
     except:
         posts = []
-    
+ 
     return posts
-
+ 
 def get_five_category_random():
     categories = []
     try:
@@ -303,9 +305,9 @@ def get_five_category_random():
             categories.append(category)
     except:
         categories = []
-    
+ 
     return categories
-
+ 
 def get_list_post_same_category(id_category):
     posts = []
     try:
@@ -336,11 +338,12 @@ def get_list_post_same_category(id_category):
             posts.append(post)
     except:
         posts = []
-    
+ 
     return posts
-
+ 
 # login
-
-
+ 
+ 
 if __name__ == "__main__":
     pass
+ 

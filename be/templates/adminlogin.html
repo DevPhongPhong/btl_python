@@ -58,6 +58,7 @@
                 contentType:'application/json',
                 type:'POST',
                 success:()=>{
+                    localStorage["username"] = username
                     window.location.href='/admin/home'
                 },
                 error:()=>{

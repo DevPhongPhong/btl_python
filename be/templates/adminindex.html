@@ -48,9 +48,9 @@
                                 <li><button onclick="logout()">Đăng xuất</button>
                                 </li>
                                 <li>
-                                    <a href="/category">Đăng bài</a>
+                                    <a href="/admin/submitpost">Đăng bài</a>
                                 </li>
-                                <li><a href="/post">Tạo danh mục</a>
+                                <li><a href="/admin/submitcategory">Tạo danh mục</a>
 
                                 </li>
                             </ul>
@@ -60,6 +60,7 @@
                                 $.ajax({
                                     url:'/api/logout',
                                     success:()=>{
+                                        localStorage.clear()
                                         window.location.href='/admin/login'
                                     }
                                 })

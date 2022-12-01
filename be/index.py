@@ -96,6 +96,7 @@ def api_get_post(id_post):
 
 @app.route('/api/post/add',  methods = ['POST'])
 def api_add_post():
+    print(request.json)
     if 'username' in session:
         post = request.json
         return jsonify(utils.add_post(post))
@@ -114,9 +115,9 @@ def api_update_post():
         return resp
 
 @app.route('/api/post/delete/<id>',  methods = ['DELETE'])
-def api_delete_post(id_post):
+def api_delete_post(id):
     if 'username' in session:
-        return jsonify(utils.delete_post(id_post))
+        return jsonify(utils.delete_post(id))
     else:
         resp = jsonify({'message' : 'Unauthorized'})
         resp.status_code = 401
