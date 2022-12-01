@@ -1,4 +1,4 @@
-from flask import Flask, jsonify,request, render_template,session
+from flask import Flask, jsonify,request, render_template,session,redirect, url_for
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 import utils,sqlite3,psycopg2,psycopg2.extras
@@ -31,9 +31,37 @@ def post(id):
 def contact():
     return render_template('contact.html')
 
-@app.route('/submitpost', methods=['GET'])    
+@app.route('/admin/submitpost', methods=['GET'])    
 def submitpost():
-    return render_template('submitpost.html')
+    if 'username' in session:
+        return render_template('submitpost.html')
+    else:
+        return redirect(url_for('adminlogin'))
+    
+
+@app.route('/admin/submitcategory', methods=['GET'])    
+def submitcategory():
+    if 'username' in session:
+        return render_template('submitcategory.html')
+    else:
+       return redirect(url_for('adminlogin'))
+    
+
+@app.route('/admin/changecategory', methods=['GET'])    
+def changecategory():
+    if 'username' in session:
+        return render_template('changecategory.html')
+    else:
+        return redirect(url_for('adminlogin'))
+   
+
+@app.route('/admin/changepost', methods=['GET'])    
+def changepost():
+    if 'username' in session:
+        return render_template('changepost.html')
+    else:
+        return redirect(url_for('adminlogin'))
+    
 
 @app.route('/error', methods=['GET'])    
 def error():
@@ -45,7 +73,13 @@ def adminlogin():
 
 @app.route('/admin/home', methods=['GET'])    
 def adminindex():
-    return render_template('adminindex.html')
+    if 'username' in session:
+        return render_template('adminindex.html')
+    else:
+        return redirect(url_for('adminlogin'))
+    
+
+
 
 # post
 

@@ -2,7 +2,7 @@
 <html class="no-js" lang="">
 
 
-   
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -24,12 +24,149 @@
     <!-- Flaticon CSS -->
     <link rel="stylesheet" href="/static/fonts/flaticon.css">
     <!-- Custom Css -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
     <!-- Modernizr Js -->
     <script src="/static/js/modernizr-3.6.0.min.js"></script>
 </head>
 
 <body>
+    <header class="header-one">
+        <div id="header-main-menu" class="header-main-menu header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-3 col-sm-4 col-4 possition-static">
+                        <div class="site-logo-mobile">
+                            <a href="/" class="sticky-logo-light"><img src="/static/img/Food-com-logo.png"
+                                    style="max-height: 40px;" alt="Site Logo"></a>
+                            <a href="/" class="sticky-logo-dark"><img src="/static/img/Food-com-logo.png"
+                                    style="max-height: 40px;" alt="Site Logo"></a>
+                        </div>
+                        <nav class="site-nav">
+                            <ul id="site-menu" class="site-menu">
+                                <li><button onclick="logout()">Đăng xuất</button>
+                                </li>
+                                <li>
+                                    <a href="/category">Đăng bài</a>
+                                </li>
+                                <li><a href="/post">Tạo danh mục</a>
+
+                                </li>
+                            </ul>
+                        </nav>
+                        <script>
+                            logout=()=>{
+                                $.ajax({
+                                    url:'/api/logout',
+                                    success:()=>{
+                                        window.location.href='/admin/login'
+                                    }
+                                })
+                            }
+                            post=()=>{
+                                window.location.href='/admin/submitpost'
+                            }
+                            category=()=>{
+                                window.location.href='/admin/submitcategory'
+                            }
+                        </script>
+                    </div>
+                    <div class="col-lg-4 col-md-9 col-sm-8 col-8 d-flex align-items-center justify-content-end">
+                        <div class="nav-action-elements-layout1">
+                            <ul>
+                                <li id="btl_loginShow">
+                                   
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mob-menu-open toggle-menu">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom d-none d-lg-block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="nav-action-elements-layout2">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="site-logo-desktop">
+                            <a href="/" class="main-logo"><img src="/static/img/Food-com-logo.png" alt="Site Logo"
+                                    style="max-height: 60px;"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Category</h1>
+        <div>
+            <table id="btl_category_body"class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">name</th>
+                        <th scope="col">main_image</th>
+                        <th scope="col">thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Centro comercial Moctezuma</td>
+                        <td>Francisco Chang</td>
+                        <td>Mexico</td>
+                        <td>
+                            <button>Xóa</button>
+                            <button>sửa</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Centro comercial Moctezuma</td>
+                        <td>Francisco Chang</td>
+                        <td>Mexico</td>
+                        <td>
+                            <button>Xóa</button>
+                            <button>sửa</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <h1>Post</h1>
+        <div>
+            <table id="btl_post_body">
+                <tr>
+                    <th>id</th>
+                    <th>title</th>
+                    <th>sub_content</th>
+                    <th>full_content</th>
+                    <th>main_image</th>
+                    <th>author</th>
+                    <th>viewcount</th>
+                    <th>created_time</th>
+                    <th>category</th>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Maria Anders</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Francisco Chang</td>
+                    <td>Mexico</td>
+                </tr>
+            </table>
+        </div>
+    </div>
     <!-- Jquery Js -->
     <script src="/static/js/jquery-3.3.1.min.js"></script>
     <!-- Bootstrap Js -->
@@ -43,4 +180,5 @@
     <!-- Custom Js -->
     <script src="/static/js/main.js"></script>
 </body>
+
 </html>
