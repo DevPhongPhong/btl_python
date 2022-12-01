@@ -6,7 +6,7 @@ $.ajax({
     success:(res)=>{
         btl_content = document.getElementById('btl_content')
         btl_content.innerHTML =`<div class="main-figure">
-        <a href="#"><img src="${res.image[0]}" alt="Blog"></a>
+        <a href="#"><img src="${res.main_image[0]}" alt="Blog"></a>
         </div>
         <div class="blog-content">
         <ul class="entry-meta">
