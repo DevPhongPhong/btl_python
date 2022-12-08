@@ -37,6 +37,10 @@ def submitpost():
         return render_template('submitpost.html')
     else:
         return redirect(url_for('adminlogin'))
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
     
 
 @app.route('/admin/submitcategory', methods=['GET'])    
@@ -135,7 +139,6 @@ def api_get_category(id_category):
 @app.route('/api/category/add',  methods = ['POST'])
 def api_add_category():
     if 'username' in session:
-        print(request.json)
         category = request.json
         return jsonify(utils.add_category(category))
     else:
@@ -197,7 +200,6 @@ def home():
  
 @app.route('/api/login',methods = ["POST"])
 def login():
-    print('11111111111111111111111111111')
     data = request.json
     username = data['username']
     password = data['password']
